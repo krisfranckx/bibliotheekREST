@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: be.atheneumboom.bibliotheek.BibliotheekApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 12.90 s -- in be.atheneumboom.bibliotheek.BibliotheekApplicationTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 13.06 s -- in be.atheneumboom.bibliotheek.BibliotheekApplicationTests
