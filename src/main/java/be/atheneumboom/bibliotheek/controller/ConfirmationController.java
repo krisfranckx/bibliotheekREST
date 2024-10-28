@@ -23,6 +23,7 @@ public class ConfirmationController {
     @GetMapping("/confirm")
     public RedirectView confirm(@RequestParam("token") String token) {
         //Long userId = confirmationTokenService.getToken(token).get().getUser().getId();
+        System.out.println("backend confirm °°°°°°°°°°°°");
         try{
             registrationService.confirmToken(token);
 
