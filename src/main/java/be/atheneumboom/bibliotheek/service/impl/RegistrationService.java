@@ -27,7 +27,6 @@ public class RegistrationService {
     public Response register(User user) {
         User newUser = user;
         newUser.setEnabledUI(false);
-        //newUser.setPaswoord(encoder.encode(user.getPaswoord()));     //dubbel ge-encoded?
         signUpUser(newUser);
         return Response.builder().build();
     }
