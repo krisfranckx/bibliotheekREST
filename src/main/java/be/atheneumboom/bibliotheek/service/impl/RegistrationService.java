@@ -33,6 +33,7 @@ public class RegistrationService {
 
     @Transactional
     public void confirmToken(String token){
+
         ConfirmationToken confirmationToken = confirmationTokenService.getToken(token).orElseThrow(()->new IllegalStateException("token not found"));
         if (confirmationToken.getConfirmedAt()!=null){
             throw new IllegalStateException("email already comfirmed");
