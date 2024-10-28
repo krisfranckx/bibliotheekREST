@@ -59,7 +59,7 @@ public class RegistrationService {
         ConfirmationToken confirmationToken = new ConfirmationToken(
                 token,
                 LocalDateTime.now(),
-                LocalDateTime.now().plusMinutes(15),
+                LocalDateTime.now().plusHours(3),
                 user
         );
         confirmationTokenService.saveConfirmationToken(confirmationToken);
