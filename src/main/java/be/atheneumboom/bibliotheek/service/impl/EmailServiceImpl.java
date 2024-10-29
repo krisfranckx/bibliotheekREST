@@ -20,7 +20,6 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-
 public class EmailServiceImpl implements EmailService {
 
     @Value("smtp.gmail.com")
@@ -323,6 +322,7 @@ public class EmailServiceImpl implements EmailService {
         }
 
     @Override
+    @Async
     public void sendHtmlEmail_confirmRegistration(String to, User user, String token, String baseURL) {
         try {
             Context context = new Context();

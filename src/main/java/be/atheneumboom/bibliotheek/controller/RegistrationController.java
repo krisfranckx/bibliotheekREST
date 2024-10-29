@@ -27,6 +27,7 @@ public class RegistrationController {
     @PostMapping
     public Response register(@RequestBody() User user){
         try {
+            System.out.println("Registration Test "+ user.getEmail());
             registrationService.register(user);
         }catch (IllegalStateException e){
             return Response.builder().build();

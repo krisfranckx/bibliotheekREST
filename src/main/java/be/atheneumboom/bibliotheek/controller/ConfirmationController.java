@@ -4,6 +4,7 @@ import be.atheneumboom.bibliotheek.config.Settings;
 import be.atheneumboom.bibliotheek.model.token.ConfirmationTokenService;
 import be.atheneumboom.bibliotheek.service.UserService;
 import be.atheneumboom.bibliotheek.service.impl.RegistrationService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,13 +18,21 @@ public class ConfirmationController {
     @Autowired
     private final RegistrationService registrationService;
     private final UserService userService;
-            ;
-
     private final ConfirmationTokenService confirmationTokenService;
+
     @GetMapping("/confirm")
-    public RedirectView confirm(@RequestParam("token") String token) {
+    public RedirectView confirm(@RequestParam("token") String token, HttpServletRequest request) {
         //Long userId = confirmationTokenService.getToken(token).get().getUser().getId();
+        //test om te achterhalen vanwaar de request komt
+        String userAgent = request.getHeader("User-Agent");
+        String referer = request.getHeader("Referer");
+        System.out.println("Request received for activateAccount");
+        System.out.println("User-Agent: " + userAgent);
+        System.out.println("Referer: " + referer);
+        //
+
         System.out.println("backend confirm °°°°°°°°°°°°");
+
         try{
             registrationService.confirmToken(token);
 
