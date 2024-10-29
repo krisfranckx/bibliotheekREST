@@ -327,7 +327,7 @@ public class EmailServiceImpl implements EmailService {
         try {
             Context context = new Context();
             context.setVariable("name", user.getVoornaam());
-            context.setVariable("totalUrl",baseURL+"/api/registration/confirm?token="+token);
+            context.setVariable("totalUrl",baseURL+"/confirm?token="+token);
 
             String text = templateEngine.process("emailTemplate_confirmatieEmail.html", context);
             MimeMessage message = mailSender.createMimeMessage();

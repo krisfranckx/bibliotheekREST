@@ -63,7 +63,7 @@ public class RegistrationService {
                 user
         );
         confirmationTokenService.saveConfirmationToken(confirmationToken);
-        emailService.sendHtmlEmail_confirmRegistration(user.getEmail(), user, confirmationToken.getToken(), Settings.BASE_URL_BACK);
+        emailService.sendHtmlEmail_confirmRegistration(user.getEmail(), user, confirmationToken.getToken(), Settings.BASE_URL_FRONT);
         return token;
     }
 
