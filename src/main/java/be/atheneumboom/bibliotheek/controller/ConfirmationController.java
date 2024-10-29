@@ -22,18 +22,8 @@ public class ConfirmationController {
 
     @GetMapping("/confirm")
     public RedirectView confirm(@RequestParam("token") String token, HttpServletRequest request) {
-        //Long userId = confirmationTokenService.getToken(token).get().getUser().getId();
-        //test om te achterhalen vanwaar de request komt
-        String userAgent = request.getHeader("User-Agent");
-        String referer = request.getHeader("Referer");
-        System.out.println("Request received for activateAccount");
-        System.out.println("User-Agent: " + userAgent);
-        System.out.println("Referer: " + referer);
-        //
 
-        System.out.println("backend confirm °°°°°°°°°°°°");
-
-        try{
+        /*try{
             registrationService.confirmToken(token);
 
         }catch (IllegalStateException e){
@@ -42,7 +32,7 @@ public class ConfirmationController {
             RedirectView redirectView = new RedirectView();
             redirectView.setUrl(Settings.BASE_URL_FRONT+"/expired");
             return redirectView;
-        }
+        }*/
         RedirectView redirectView = new RedirectView();
         redirectView.setUrl(Settings.BASE_URL_FRONT+"/confirmed");
         return redirectView;
