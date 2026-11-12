@@ -35,7 +35,7 @@ public class LKBookServiceImpl implements LKBookService {
     @Override
     public Page<LKBook> getBooks(Integer pageNumber, Integer pageSize, String sortField, String keywordFilter) {
         Page<LKBook> books;
-        if (keywordFilter==null){
+        if (keywordFilter == null || keywordFilter.isBlank()) {
             books = lkBookRepo.findAll(
                     PageRequest.of(
                             pageNumber!=null?pageNumber:0, pageSize!=null?pageSize:Settings.PAGESIZE_BOOKS).
@@ -57,7 +57,7 @@ public class LKBookServiceImpl implements LKBookService {
     public Stream<LKBook> getBooksDataProvider(Integer offset, Integer pagesize, String sortField, String keywordFilter, SortDirection direction) {
         Page<LKBook> books;
         String dir = direction.toString().equals("ASCENDING")?"ASC":"DESC";
-        if (keywordFilter==null){
+        if (keywordFilter == null || keywordFilter.isBlank()) {
             books = lkBookRepo.findAll(
                     PageRequest.of(
                                     offset!=null?offset:0, pagesize!=null?pagesize:Settings.PAGESIZE_BOOKS).

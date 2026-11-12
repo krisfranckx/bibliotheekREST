@@ -25,6 +25,8 @@ public interface BookService {
 
     List<Book> getBooks();
 
+    Integer countBooks();
+
     Book saveBook(Book book);
 
     Book updateBook(Long id, Book book);

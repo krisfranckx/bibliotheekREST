@@ -34,7 +34,7 @@ public class MagazineServiceImpl implements MagazineService {
     @Override
     public Page<Magazine> getMagazines(Integer pageNumber, Integer pageSize, String sortField, String keywordFilter) {
         Page<Magazine> books;
-        if (keywordFilter==null){
+        if (keywordFilter == null || keywordFilter.isBlank()) {
             books = magazineRepo.findAll(
                     PageRequest.of(
                             pageNumber!=null?pageNumber:0, pageSize!=null?pageSize:Settings.PAGESIZE_MAGAZINES).

@@ -54,17 +54,18 @@ public class BookController {
 
     @GetMapping("/count")
     public Integer getNumberOfBooks(){
-        return bookService.getBooks().size();
+                return bookService.countBooks();
     }
 
     @GetMapping("")
-    public ResponseEntity<Response> getBooksAllWithFilter(@RequestParam(value = "filter") String filter){
+        public ResponseEntity<Response> getBooksAllWithFilter(@RequestParam(value = "filter") String filter){
+                var books = bookService.getBooksAllWithFilter(filter);
         return ResponseEntity.ok(
                 Response.builder()
                         //.timeStamp(LocalDateTime.now())
                         //.data(Map.of("lkbooks",bookService.getBooks(pageNumber, pageSize, sort, filter).stream().toList()))
-                        .data(Map.of("booksAllWithFilter",bookService.getBooksAllWithFilter(filter),
-                                "numberofBooksWithFilter", bookService.getBooksAllWithFilter(filter).size()))
+                        .data(Map.of("booksAllWithFilter", books,
+                                "numberofBooksWithFilter", books.size()))
                         .message("Alle boeken opgehaald")
                         .status(OK)
                         .statusCode(OK.value())
