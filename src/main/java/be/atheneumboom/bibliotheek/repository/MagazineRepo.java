@@ -7,7 +7,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.time.LocalDate;
+
 public interface MagazineRepo extends JpaRepository<Magazine,Long> {
+    boolean existsByGeleendDoor_IdAndUitgeleendTotBefore(Long userId, LocalDate date);
+
     @Query(value = "SELECT * FROM tijdschrift m WHERE " +
             "lower(m.naamtijdschrift) LIKE CONCAT('%',:keywordFilter,'%') OR " +
             "lower(m.code_tijdschrift) LIKE CONCAT('%',:keywordFilter,'%') OR " +

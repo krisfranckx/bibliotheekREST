@@ -7,9 +7,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface LKBookRepo extends JpaRepository<LKBook,Long> {
+
+        boolean existsByGeleendDoor_IdAndUitgeleendTotBefore(Long userId, LocalDate date);
 
     @Query(value = "SELECT * FROM lkbooks b WHERE " +
             "lower(b.auteur) LIKE CONCAT('%',:keywordFilter,'%') OR " +

@@ -133,36 +133,16 @@ public class MagazineServiceImpl implements MagazineService {
     }
 
     private void checkEnabledUI(User user) {
-        if (user.getAantalItemsGeleend()>Settings.MAX_AANTAL_ITEMS_USER-1
-        &&!(user.getVoornaam().toLowerCase().contains("leestas")||user.getFamilienaam().toLowerCase().contains("leestas"))
-            ){
-            user.setEnabledUI(false);
-            userService.saveUser(user);
-        }else{
-            user.setEnabledUI(true);
-            userService.saveUser(user);
-        }
-        for (Book book: bookRepo.findAll()) {
-            if (book.getGeleendDoor()!= null && Objects.equals(book.getGeleendDoor().getId(), user.getId())
-                    && book.getUitgeleendTot().isBefore(LocalDate.now())){
-                user.setEnabledUI(false);
-                userService.saveUser(user);
-            }
-        }
-        for (LKBook lkBook:lkBookRepo.findAll()) {
-            if (lkBook.getGeleendDoor()!= null && Objects.equals(lkBook.getGeleendDoor().getId(), user.getId())
-                    && lkBook.getUitgeleendTot().isBefore(LocalDate.now())){
-                user.setEnabledUI(false);
-                userService.saveUser(user);
-            }
-        }
-        for (Magazine magazine:magazineRepo.findAll()) {
-            if (magazine.getGeleendDoor()!= null && Objects.equals(magazine.getGeleendDoor().getId(), user.getId())
-                    && magazine.getUitgeleendTot().isBefore(LocalDate.now())){
-                user.setEnabledUI(false);
-                userService.saveUser(user);
-            }
-        }
+        boolean leestas = user.getVoornaam().toLowerCase().contains("leestas")
+                || user.getFamilienaam().toLowerCase().contains("leestas");
+        boolean maximumBereikt = user.getAantalItemsGeleend() > Settings.MAX_AANTAL_ITEMS_USER - 1 && !leestas;
+        LocalDate vandaag = LocalDate.now();
+        boolean heeftTeLaatItem = bookRepo.existsByGeleendDoor_IdAndUitgeleendTotBefore(user.getId(), vandaag)
+                || lkBookRepo.existsByGeleendDoor_IdAndUitgeleendTotBefore(user.getId(), vandaag)
+                || magazineRepo.existsByGeleendDoor_IdAndUitgeleendTotBefore(user.getId(), vandaag);
+
+        user.setEnabledUI(!maximumBereikt && !heeftTeLaatItem);
+        userService.saveUser(user);
     }
     @Override
     public void vrijgeven(Magazine magazine) {
