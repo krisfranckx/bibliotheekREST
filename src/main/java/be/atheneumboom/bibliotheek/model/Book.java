@@ -49,16 +49,6 @@ public class Book implements Comparable<Book> {
         this.graad = graad;
         this.fictieNonFictie = fictieNonFictie;
         setType("book");
-        this.code=generateCode();
-    }
-
-    private String generateCode(){
-        StringBuilder sb = new StringBuilder();
-        for (String s : auteur.split(" ")) {
-            sb.append(s.toCharArray()[0]);
-        }
-        sb.append(boekId);
-        return sb.toString();
     }
 
 

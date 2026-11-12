@@ -213,14 +213,24 @@ public class BookServiceImpl implements BookService {
 
     private String generateCode(Book book){
         StringBuilder sb = new StringBuilder();
-        for (String s : book.getAuteur().split(" ")) {
-            sb.append(s.toCharArray()[0]);
+        if (book.getAuteur() != null && !book.getAuteur().isBlank()) {
+            for (String part : book.getAuteur().trim().split("\\s+")) {
+                if (!part.isEmpty()) {
+                    sb.append(part.charAt(0));
+                }
+            }
+        }
+        if (sb.isEmpty()) {
+            sb.append("BOEK");
         }
         sb.append(book.getBoekId());
         return sb.toString();
     }
 
     private String normalizeBarcode(String barcode) {
+        if (barcode == null || barcode.isBlank()) {
+            return null;
+        }
         return barcode.trim().replaceAll("[^0-9Xx]", "").toUpperCase();
     }
 }
