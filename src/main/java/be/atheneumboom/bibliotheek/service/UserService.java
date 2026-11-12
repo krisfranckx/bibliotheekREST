@@ -13,6 +13,8 @@ public interface UserService {
 
     User getRealUser(Long userId);
 
+    void ensureUserCanBorrow(User user);
+
     User saveUserWithPassword(User user);
     boolean deleteUser(Long userId);
 

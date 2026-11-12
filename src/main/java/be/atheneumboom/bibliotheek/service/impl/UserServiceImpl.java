@@ -62,6 +62,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void ensureUserCanBorrow(User user) {
+        if (!user.isEnabledUI()) {
+            throw new UserNotValidException("Gebruiker mag momenteel geen items lenen.");
+        }
+    }
+
+    @Override
     public User saveUserWithPassword(User user) {
         try{
             if (user.getPaswoord()==null){

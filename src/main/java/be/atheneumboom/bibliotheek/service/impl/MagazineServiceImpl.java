@@ -90,6 +90,7 @@ public class MagazineServiceImpl implements MagazineService {
     @Override
     public void borrowMagazine(Magazine magazine, UserDTO userDTO) {
         User user = userService.getRealUser(userDTO.getId());
+        userService.ensureUserCanBorrow(user);
         magazine.setGeleendDoor(user);
         magazine.setUitgeleend(true);
         if (user.getVoornaam().toLowerCase().contains("leestas")||user.getFamilienaam().toLowerCase().contains("leestas")) {

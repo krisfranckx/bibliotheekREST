@@ -132,6 +132,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public void borrowBook(Book book, UserDTO userDTO) {
         User user = userService.getRealUser(userDTO.getId());
+        userService.ensureUserCanBorrow(user);
         book.setGeleendDoor(user);
         book.setUitgeleend(true);
         if (user.getVoornaam().toLowerCase().contains("leestas")||user.getFamilienaam().toLowerCase().contains("leestas")){
