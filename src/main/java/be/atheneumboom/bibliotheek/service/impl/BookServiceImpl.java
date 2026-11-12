@@ -22,6 +22,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 @Service
@@ -100,6 +101,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public Book saveBook(Book book) {
         Book newBoek = new Book(book.getTitel(), book.getAuteur(), book.getTaal(), book.getGraad(), book.getFictieNonFictie());
+        newBoek.setBarcode(normalizeBarcode(book.getBarcode()));
         bookRepo.save(newBoek);
         newBoek.setCode(generateCode(newBoek));
         return bookRepo.save(newBoek);
@@ -113,6 +115,7 @@ public class BookServiceImpl implements BookService {
         bookUpdated.setGraad    (book.getGraad());
         bookUpdated.setTitel    (book.getTitel());
         bookUpdated.setFictieNonFictie  (book.getFictieNonFictie());
+        bookUpdated.setBarcode(normalizeBarcode(book.getBarcode()));
         bookUpdated.setCode(generateCode(book));
         return bookRepo.save(
                 bookUpdated
@@ -127,6 +130,14 @@ public class BookServiceImpl implements BookService {
     @Override
     public Book getBook(Long id) {
         return bookRepo.findById(id).orElseThrow(()->new BookNotFoundException("Boek met id "+id + " niet gevonden."));
+    }
+
+    @Override
+    public Optional<Book> getBookByBarcode(String barcode) {
+        if (barcode == null || barcode.isBlank()) {
+            return Optional.empty();
+        }
+        return bookRepo.findByBarcode(normalizeBarcode(barcode));
     }
 
     @Override
@@ -207,5 +218,9 @@ public class BookServiceImpl implements BookService {
         }
         sb.append(book.getBoekId());
         return sb.toString();
+    }
+
+    private String normalizeBarcode(String barcode) {
+        return barcode.trim().replaceAll("[^0-9Xx]", "").toUpperCase();
     }
 }

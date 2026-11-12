@@ -1,9 +1,12 @@
 
 package be.atheneumboom.bibliotheek.controller;
 
+import be.atheneumboom.bibliotheek.exceptions.BookNotFoundException;
 import be.atheneumboom.bibliotheek.model.*;
 import be.atheneumboom.bibliotheek.model.DTO.UserDTO;
+import be.atheneumboom.bibliotheek.model.DTO.BookMetadataDTO;
 import be.atheneumboom.bibliotheek.service.BookService;
+import be.atheneumboom.bibliotheek.service.BookMetadataService;
 import be.atheneumboom.bibliotheek.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.query.SortDirection;
@@ -22,6 +25,7 @@ import static org.springframework.http.HttpStatus.OK;
 @RequiredArgsConstructor
 public class BookController {
     private final BookService bookService;
+        private final BookMetadataService bookMetadataService;
     private final UserService userService;
 
     @GetMapping("/provider")
@@ -103,6 +107,35 @@ public class BookController {
                         .build()
         );
     }
+
+    @GetMapping("/barcode/{barcode}")
+    public ResponseEntity<Response> getBookByBarcode(@PathVariable String barcode) {
+        Book book = bookService.getBookByBarcode(barcode)
+                .orElseThrow(() -> new BookNotFoundException("Boek met barcode " + barcode + " niet gevonden."));
+        return ResponseEntity.ok(
+                Response.builder()
+                        .data(Map.of("book", book))
+                        .message("Boek met barcode " + barcode + " opgehaald")
+                        .status(OK)
+                        .statusCode(OK.value())
+                        .build()
+        );
+    }
+
+        @GetMapping("/barcode/{barcode}/metadata")
+        public ResponseEntity<Response> getBookMetadataByBarcode(@PathVariable String barcode) {
+                BookMetadataDTO metadata = bookMetadataService.findByBarcode(barcode)
+                                .orElseThrow(() -> new BookNotFoundException("Geen boekmetadata gevonden voor barcode " + barcode + "."));
+                return ResponseEntity.ok(
+                                Response.builder()
+                                                .data(Map.of("book", metadata))
+                                                .message("Boekmetadata opgehaald voor barcode " + barcode)
+                                                .status(OK)
+                                                .statusCode(OK.value())
+                                                .build()
+                );
+        }
+
     @PostMapping ()
     public ResponseEntity<Response> saveBook(
             @RequestBody Book book){

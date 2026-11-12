@@ -10,10 +10,13 @@ import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public interface BookRepo extends JpaRepository<Book,Long> {
 
         boolean existsByGeleendDoor_IdAndUitgeleendTotBefore(Long userId, LocalDate date);
+
+        Optional<Book> findByBarcode(String barcode);
 
     @Query(value = "SELECT * FROM boek b " +
             "WHERE " +

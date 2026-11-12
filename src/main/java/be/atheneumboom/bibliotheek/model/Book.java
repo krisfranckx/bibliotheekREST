@@ -20,6 +20,8 @@ public class Book implements Comparable<Book> {
     private String titel;
     @Column(name = "code_boek")
     private String code = "testcode";
+    @Column(length = 32)
+    private String barcode;
     private Boolean uitgeleend;
     @ManyToOne
     @JoinColumn(name = "id_lener")

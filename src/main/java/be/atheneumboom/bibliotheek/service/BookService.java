@@ -35,6 +35,8 @@ public interface BookService {
 
     Book getBook(Long id);
 
+    Optional<Book> getBookByBarcode(String barcode);
+
     void borrowBook(Book book, UserDTO userDTO);
 
     void reserveBook(Book book, UserDTO user);
