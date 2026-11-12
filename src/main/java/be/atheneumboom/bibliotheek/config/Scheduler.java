@@ -47,13 +47,14 @@ public class Scheduler {
     @Async
     @Scheduled(cron = "0 0 5 * * *")
     public void scheduler_garbageCollectionTokens(){
-        for (ConfirmationToken CFtoken:confirmationTokenService.list()) {
-                if (CFtoken.getConfirmedAt()!=null && CFtoken.getConfirmedAt().isBefore(LocalDateTime.now())){
-                    confirmationTokenService.deleteToken(CFtoken.getToken());
-                }
-                if (CFtoken.getExpiresAt()!=null && CFtoken.getExpiresAt().isBefore(LocalDateTime.now())){
-                    confirmationTokenService.deleteToken(CFtoken.getToken());
-                }
+        LocalDateTime now = LocalDateTime.now();
+        for (ConfirmationToken token : confirmationTokenService.list()) {
+            boolean confirmed = token.getConfirmedAt() != null && token.getConfirmedAt().isBefore(now);
+            boolean expired = token.getExpiresAt() != null && token.getExpiresAt().isBefore(now);
+
+            if (confirmed || expired) {
+                confirmationTokenService.deleteToken(token.getToken());
+            }
         }
     }
 

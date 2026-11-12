@@ -28,9 +28,12 @@ public class ConfirmationTokenService {
     }
 
     public boolean deleteToken(String token) {
-        ConfirmationToken CFtoken = confirmationTokenRepo.findByToken(token).orElseThrow(()->new UsernameNotFoundException("token not found"));
-        confirmationTokenRepo.delete(CFtoken);
-        return true;
+          return confirmationTokenRepo.findByToken(token)
+                    .map(confirmationToken -> {
+                         confirmationTokenRepo.delete(confirmationToken);
+                         return true;
+                    })
+                    .orElse(false);
     }
 
 
