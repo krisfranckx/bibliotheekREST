@@ -6,7 +6,7 @@ import be.atheneumboom.bibliotheek.model.Magazine;
 import be.atheneumboom.bibliotheek.model.User;
 import be.atheneumboom.bibliotheek.model.token.ConfirmationToken;
 import be.atheneumboom.bibliotheek.model.token.ConfirmationTokenService;
-import be.atheneumboom.bibliotheek.service.EmailService;;
+import be.atheneumboom.bibliotheek.service.EmailService;
 import be.atheneumboom.bibliotheek.service.impl.BookServiceImpl;
 import be.atheneumboom.bibliotheek.service.impl.LKBookServiceImpl;
 import be.atheneumboom.bibliotheek.service.impl.MagazineServiceImpl;
